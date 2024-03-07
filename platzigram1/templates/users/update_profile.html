@@ -1,0 +1,39 @@
+{% extends "base.html"%}
+{% block head_content %}
+<!-- si hay inicio de sesión tenemos usuario, gracias al middlwware de authentication -->
+    <title>@{{request.user.username }} |  Update Profile</title>
+{% endblock %}
+
+{% block container %}
+    <h1 class="mt-5"">{{request.user.username}} </h1>  
+    {% if error%}
+        <p class="alert alert-danger">{{error}}</p>
+    {% endif%}
+    <form method="POST" action= "{% url "signup" %}">
+        {% csrf_token %}
+<!-- 
+        <div class="forms-group">
+            <input class="form-control" type="text" placeholder="Username" name="username" required ="True">
+        </div>
+        <div class="forms-group">
+            <input class="form-control" type="password" placeholder="Password" name="password" required="True">
+        </div>
+        <div class="forms-group">
+            <input class="form-control" type="password" placeholder="Password confirmation" name="password_confirmation" required="True">
+        </div>
+        <div class="forms-group">
+            <input class="form-control" type="text" placeholder="First name" name="first_name" required ="True">
+        </div>
+        <div class="forms-group">
+            <input class="form-control" type="text" placeholder="Last name" name="last_name" required ="True">
+        </div>
+        <div class="forms-group">
+            <input class="form-control" type="email" placeholder="Email" name="email" required ="True">
+        </div>
+        
+        <button class="btn btn-primary btn-block mt-5" type="submit">Register</button>
+-->
+        
+    </form>
+
+{% endblock %}
