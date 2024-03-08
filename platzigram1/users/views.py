@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import Profile
 from django.db.utils import IntegrityError
+
+from users.forms import ProfileForm, SignupForm
+
 # Create your views here.
 def login_view(request):
     if request.method == 'POST':
@@ -29,7 +32,7 @@ def logout_view(request):
     return redirect('login')
 
 def signup_view(request):
-    if request.method == 'POST':
+    """if request.method == 'POST':
         username= request.POST["username"]
         password = request.POST["password"]
         password_confirmation = request.POST['password_confirmation']
@@ -49,6 +52,45 @@ def signup_view(request):
         return redirect('login')
 
     return render(request, 'users/signup.html')
-
+@login_required"""
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = SignupForm()
+        
+    return render(
+            request=request,
+            template_name='users/signup.html',
+            context={
+                'form':form,
+            }
+        )
 def update_profile(request):
-    return  render(request, 'users/update_profile.html')
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            profile.website = data['website']
+            profile.biography = data['biography']
+            profile.phone_number = data['phone_number']
+            profile.picture = data['picture']
+            profile.save()
+            print(form.cleaned_data)
+            return redirect('update_profile')  
+    else:
+        form = ProfileForm()
+                
+    return render(
+        request=request,
+        template_name='users/update_profile.html',
+        context={
+            'profile': profile,
+            'user': request.user,
+            'form': form,
+        }
+    )
