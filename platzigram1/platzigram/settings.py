@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ho0t9rnw7=s@-y5t89sf*9%d&3_n!!*_g1uv6y(l^1=#wnhvhp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gatos.io', '127.0.0.1']
 
 
 # Application definition
@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'platzigram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'platzigramdb',
+        'USER': 'postgres',
+        'PASSWORD': 'Celiapostgresql',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
